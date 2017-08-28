@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'local_tunnel/cli'
+
+LocalTunnel::CLI.start(ARGV)

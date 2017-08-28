@@ -1,0 +1,32 @@
+AllCops:
+    TargetRubyVersion: 2.3
+
+Style/ClassAndModuleChildren:
+    Enabled: false
+
+Style/Documentation:
+    Enabled: false
+
+Style/TrailingCommaInLiteral:
+    EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArguments:
+    EnforcedStyleForMultiline: comma
+
+Style/NumericPredicate:
+    Enabled: false
+
+Style/ZeroLengthPredicate:
+    Enabled: false
+
+Metrics/BlockLength:
+    Enabled: false
+
+Metrics/MethodLength:
+    Enabled: false
+
+Metrics/AbcSize:
+    Enabled: false
+
+Metrics/CyclomaticComplexity:
+    Enabled: false
