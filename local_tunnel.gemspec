@@ -2,8 +2,8 @@
 
 Gem::Specification.new do |s|
   s.name        =  'local_tunnel'
-  s.version     =  '0.1.0'
-  s.licenses    =  ['MIT']
+  s.version     =  '0.1.1'
+  s.licenses    =  ['3BSD']
   s.summary     =  'Expose yourself to the world from Ruby'
   s.authors     =  ['Loic Nageleisen']
   s.email       =  'loic.nageleisen@gmail.com'
