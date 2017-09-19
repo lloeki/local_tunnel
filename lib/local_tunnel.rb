@@ -32,13 +32,19 @@ module LocalTunnel
     def start
       @rconn = rconnect
       @lconn = lconnect
+      bail = false
 
       @lrthr = Thread.new do
         buf = String.new(capacity: 1024)
-        loop do
+        until bail
           begin
             logger.debug(format("%03d lr: attempting read", @id))
             @lconn.readpartial(1024, buf)
+          rescue Errno::ECONNRESET
+            logger.debug(format("%03d lr: read failed, connection reset by peer", @id))
+            @lconn.close
+            bail = true
+            break
           rescue EOFError
             logger.debug(format("%03d lr: read failed, reconnecting", @id))
             @lconn.close
@@ -50,6 +56,11 @@ module LocalTunnel
           begin
             logger.debug(format("%03d lr: attempting write", @id))
             s = @rconn.write(buf)
+          rescue Errno::ECONNRESET
+            logger.debug(format("%03d lr: write failed, connection reset by peer", @id))
+            @lconn.close
+            bail = true
+            break
           rescue IOError
             logger.debug(format("%03d lr: write failed, reconnecting", @id))
             @rconn.close
@@ -66,10 +77,15 @@ module LocalTunnel
 
       @rlthr = Thread.new do
         buf = String.new(capacity: 1024)
-        loop do
+        until bail
           begin
             logger.debug(format("%03d rl: attempting read", @id))
             @rconn.readpartial(1024, buf)
+          rescue Errno::ECONNRESET
+            logger.debug(format("%03d rl: read failed, connection reset by peer", @id))
+            @lconn.close
+            bail = true
+            break
           rescue EOFError
             logger.debug(format("%03d rl: read failed, reconnecting", @id))
             @rconn.close
@@ -81,6 +97,11 @@ module LocalTunnel
           begin
             logger.debug(format("%03d rl: attempting write", @id))
             s = @lconn.write(buf)
+          rescue Errno::ECONNRESET
+            logger.debug(format("%03d rl: write failed, connection reset by peer", @id))
+            @lconn.close
+            bail = true
+            break
           rescue IOError
             logger.debug(format("%03d rl: write failed, reconnecting", @id))
             @lconn.close
