@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        =  'local_tunnel'
-  s.version     =  '0.1.1'
+  s.version     =  '0.2.0'
   s.licenses    =  ['3BSD']
   s.summary     =  'Expose yourself to the world from Ruby'
   s.authors     =  ['Loic Nageleisen']
